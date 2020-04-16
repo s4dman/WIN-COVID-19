@@ -58,7 +58,12 @@ dependencies {
 
     //Places SDK
     implementation 'com.google.android.libraries.places:places:2.2.0'
+    // Play Services
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+
 
     //Cardview
     implementation "androidx.cardview:cardview:1.0.0"
+
+
 }

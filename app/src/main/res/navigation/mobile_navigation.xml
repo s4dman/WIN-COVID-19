@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.imsadman.win_covid_19.ui.reminder.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_reminder"
+        android:name="com.imsadman.win_covid_19.ui.reminder.ReminderFragment"
+        android:label="@string/title_reminder"
+        tools:layout="@layout/fragment_reminder" />
 
     <fragment
         android:id="@+id/navigation_notifications"
