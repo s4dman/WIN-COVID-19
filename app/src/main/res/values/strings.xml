@@ -11,4 +11,8 @@
     <string name="hand_wash_reminder">HAND WASH</string>
     <string name="avoid_touch">AVOID TOUCH</string>
     <string name="house_clean">HOUSE CLEAN</string>
+    <string name="wash_hand_text">We will remind you to wash your hands:</string>
+    <string name="radio_every_1_hour">EVERY 1 HOUR</string>
+    <string name="radio_every_2_hour">EVERY 2 HOURS</string>
+    <string name="set_reminder">SET REMINDER</string>
 </resources>
