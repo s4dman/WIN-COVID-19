@@ -3,8 +3,12 @@ package com.imsadman.win_covid_19.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.IntentService;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.Geofence;
@@ -20,6 +24,7 @@ import java.util.Arrays;
 
 public class LocationActivity extends AppCompatActivity {
     private static final String TAG = Activity.class.getSimpleName();
+    private Button mSaveBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +41,21 @@ public class LocationActivity extends AppCompatActivity {
     }
 
 
-    private void initViews() { }
+    private void initViews() {
+        mSaveBtn = findViewById(R.id.btn_save_location);
 
+        onClick();
+    }
+
+    private void onClick() {
+        mSaveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mainActivity = new Intent(LocationActivity.this, MainActivity.class);
+                startActivity(mainActivity);
+            }
+        });
+    }
 
     private void initPlaces() {
 

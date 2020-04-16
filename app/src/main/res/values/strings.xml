@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">WIN-COVID-19</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Community</string>
+    <string name="title_reminder">Reminder</string>
+    <string name="title_notifications">Self-Assessment</string>
+    <string name="reminder_text_1">To reduce the chances of spreading the deadly corona virus:</string>
+    <string name="reminder_text_2">✔Wash your hands every 1 or 2 hours</string>
+    <string name="reminder_text_3">✔Avoid touching your face (eyes, nose, mouth)</string>
+    <string name="reminder_text_4">✔Clean your house with disinfectant cleaners</string>
+    <string name="reminder_text_5">✔Wash your clothes regularly</string>
+    <string name="hand_wash_reminder">HAND WASH</string>
+    <string name="avoid_touch">AVOID TOUCH</string>
+    <string name="house_clean">HOUSE CLEAN</string>
 </resources>
