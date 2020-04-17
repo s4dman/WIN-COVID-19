@@ -1,20 +1,13 @@
 package com.imsadman.win_covid_19.ui.reminder;
 
-import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,12 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.imsadman.win_covid_19.R;
-
-import java.util.Calendar;
-
-import static android.content.Context.ALARM_SERVICE;
 
 public class ReminderFragment extends Fragment {
     private static final String TAG = "ReminderFragment";
@@ -82,8 +70,16 @@ public class ReminderFragment extends Fragment {
         mBtnHandWash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ReminderBottomSheetDialog reminderBottomSheetDialog = new ReminderBottomSheetDialog();
-                reminderBottomSheetDialog.show(getChildFragmentManager(), "reminderBottomSheetDialog");
+                HandWashDialog handWashDialog = new HandWashDialog();
+                handWashDialog.show(getChildFragmentManager(), "handWashDialog");
+            }
+        });
+
+        mBtnAvoidTouch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AvoidTouchDialog avoidTouchDialog = new AvoidTouchDialog();
+                avoidTouchDialog.show(getChildFragmentManager(), "avoidTouchDialog");
             }
         });
     }

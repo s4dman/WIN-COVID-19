@@ -7,7 +7,6 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,18 +25,20 @@ import java.util.Calendar;
 
 import static android.content.Context.ALARM_SERVICE;
 
-public class ReminderBottomSheetDialog extends BottomSheetDialogFragment {
+public class HandWashDialog extends BottomSheetDialogFragment {
 
     private static final String TAG = "ReminderBottomSheetDial";
 
     private TextView mDialogText;
     private RadioButton mRadioBtn1, mBtnRadio2;
     private Button mBtnSetReminder;
+    private AlarmManager alarmMgr;
+    private PendingIntent alarmIntent;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bottomsheet_reminder, container, false);
+        View view = inflater.inflate(R.layout.bottomsheet_handwash, container, false);
         return view;
     }
 
@@ -70,25 +71,27 @@ public class ReminderBottomSheetDialog extends BottomSheetDialogFragment {
 
     private void handWashReminder(int hour) {
 
-        Intent intent = new Intent(getActivity(), AlertReceiver.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(getActivity(), 1, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
+        alarmMgr = (AlarmManager) getContext().getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(getContext(), AlertReceiver.class);
+        intent.putExtra("channelId", "notifyHandWash");
+        alarmIntent = PendingIntent.getBroadcast(getContext(), 1, intent, 0);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR));
-        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + 1);
-        calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND));
-
-        Log.d(TAG, "handWashReminder: " + calendar.getTime());
+        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
+        if (hour == 1) {
+            calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND) + 20);
+        } else {
+            calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND));
+        }
 
         if (hour == 1) {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60000, alarmIntent);
-            Toast.makeText(getContext(), "We will remind you every 1 minute", Toast.LENGTH_SHORT).show();
+            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60000, alarmIntent);
+            Toast.makeText(getContext(), "We will remind you every 1 hour", Toast.LENGTH_SHORT).show();
         } else {
-            Log.d(TAG, "handWashReminder: " + hour);
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 60 * 100 * 120, 120000, alarmIntent);
-            Toast.makeText(getContext(), "We will remind you every 2 minutes", Toast.LENGTH_SHORT).show();
+            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 120000, alarmIntent);
+            Toast.makeText(getContext(), "We will remind you every 2 hours", Toast.LENGTH_SHORT).show();
         }
 
     }
