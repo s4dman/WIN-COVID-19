@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.imsadman.win_covid_19.R;
+import com.imsadman.win_covid_19.Utils.Generics;
 
 import java.util.Calendar;
 
@@ -45,7 +46,9 @@ public class AvoidTouchDialog extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        createNotificationChannel();
+
+        Generics.createNotificationChannel(getContext(), "Avoid Face Touching", "Avoid touching your face", "avoidTouching");
+
         initViews(view);
     }
 
@@ -86,8 +89,8 @@ public class AvoidTouchDialog extends BottomSheetDialogFragment {
         }
 
         if (hour == 1) {
-            Log.d(TAG, "avoidTouchReminder: "+ calendar.getTime());
-            Log.d(TAG, "avoidTouchReminder: "+ calendar.getTimeInMillis());
+            Log.d(TAG, "avoidTouchReminder: " + calendar.getTime());
+            Log.d(TAG, "avoidTouchReminder: " + calendar.getTimeInMillis());
 
             alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 30000, alarmIntent);
             Toast.makeText(getContext(), "We will remind you every 1 hour", Toast.LENGTH_SHORT).show();
@@ -96,17 +99,5 @@ public class AvoidTouchDialog extends BottomSheetDialogFragment {
             Toast.makeText(getContext(), "We will remind you every 2 hours", Toast.LENGTH_SHORT).show();
         }
 
-    }
-
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Avoid Touch";
-            String description = "Avoid touching your face";
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel = new NotificationChannel("avoidTouching", name, importance);
-            channel.setDescription(description);
-            NotificationManager notificationManager = getContext().getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
     }
 }
