@@ -1,32 +1,40 @@
 package com.imsadman.win_covid_19.ui.reminder;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.imsadman.win_covid_19.R;
+import com.imsadman.win_covid_19.Utils.Generics;
+
+import static android.content.Context.ALARM_SERVICE;
 
 public class ReminderFragment extends Fragment {
     private static final String TAG = "ReminderFragment";
 
+    private TextView mReminderStatus, mHandWashStatus, mAvoidTouchStatus, mCleanHouseStatus;
     private Button mBtnHandWash, mBtnAvoidTouch, mBtnCleanHouse;
+    private ImageView mDelHandWash, mDelAvoidTouch, mDelCleanHouse;
+    private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
-    private ReminderViewModel dashboardViewModel;
     private Context mContext;
+    private String handWashSet, mAvoidToucSet, mcleanHouseSet;
 
-    private static int ONE_HOUR_INTERVAL_IN_MS = 3600000;
-    private static int TWO_HOUR_INTERVAL_IN_MS = 7200000;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -35,24 +43,17 @@ public class ReminderFragment extends Fragment {
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        dashboardViewModel = new ViewModelProvider(this).get(ReminderViewModel.class);
         View root = inflater.inflate(R.layout.fragment_reminder, container, false);
-
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        handWashSet = "false";
+        mAvoidToucSet = "false";
+        mcleanHouseSet = "false";
 
         initViews(view);
     }
@@ -62,11 +63,32 @@ public class ReminderFragment extends Fragment {
         mBtnHandWash = view.findViewById(R.id.btn_set_handwash);
         mBtnAvoidTouch = view.findViewById(R.id.btn_set_avoid_touch);
         mBtnCleanHouse = view.findViewById(R.id.btn_set_house_clean);
+        mReminderStatus = view.findViewById(R.id.available_reminders);
+        mHandWashStatus = view.findViewById(R.id.status_hand_wash);
+        mAvoidTouchStatus = view.findViewById(R.id.status_avoid_touch);
+        mCleanHouseStatus = view.findViewById(R.id.status_house_clean);
+        mDelHandWash = view.findViewById(R.id.hand_reminder_delete);
+        mDelAvoidTouch = view.findViewById(R.id.touch_reminder_delete);
+        mDelCleanHouse = view.findViewById(R.id.house_reminder_delete);
 
+        getAlarmStatus();
         onClick();
     }
 
+    private void getAlarmStatus() {
+
+        handWashSet = Generics.getSharedPreferences(getContext()).getString("handWashSet", null);
+        if (handWashSet != null && handWashSet.equals("true")) {
+            mReminderStatus.setText(getString(R.string.your_reminder_text));
+            mHandWashStatus.setVisibility(View.VISIBLE);
+            mDelHandWash.setVisibility(View.VISIBLE);
+        } else mReminderStatus.setText(getString(R.string.no_reminder_text));
+
+
+    }
+
     private void onClick() {
+
         mBtnHandWash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,9 +104,30 @@ public class ReminderFragment extends Fragment {
                 avoidTouchDialog.show(getChildFragmentManager(), "avoidTouchDialog");
             }
         });
+
+        mBtnCleanHouse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CleanHouseDialog cleanHouseDialog = new CleanHouseDialog();
+                cleanHouseDialog.show(getChildFragmentManager(), "cleanHouseDialog");
+            }
+        });
+
+        mDelHandWash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alarmMgr = (AlarmManager) getContext().getSystemService(ALARM_SERVICE);
+                Intent intent = new Intent(getContext(), AlertReceiver.class);
+                intent.putExtra("channelId", "notifyHandWash");
+                alarmIntent = PendingIntent.getBroadcast(getContext(), 1, intent, 0);
+                alarmMgr.cancel(alarmIntent);
+                Generics.setSharedPref(getContext(), "handWashSet", "false");
+                mHandWashStatus.setVisibility(View.GONE);
+                mDelHandWash.setVisibility(View.GONE);
+                Toast.makeText(mContext, "Hand Wash Reminder Canceled", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-
-
 
 
 }

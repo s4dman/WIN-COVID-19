@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,13 +29,13 @@ import static android.content.Context.ALARM_SERVICE;
 
 public class HandWashDialog extends BottomSheetDialogFragment {
 
-    private static final String TAG = "ReminderBottomSheetDial";
+    private static final String TAG = "HandWashDialog";
 
-    private TextView mDialogText;
     private RadioButton mRadioBtn1, mBtnRadio2;
     private Button mBtnSetReminder;
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
+
 
     @Nullable
     @Override
@@ -53,7 +54,6 @@ public class HandWashDialog extends BottomSheetDialogFragment {
     }
 
     private void initViews(View view) {
-        mDialogText = view.findViewById(R.id.bottomSheet_text);
         mRadioBtn1 = view.findViewById(R.id.radioButton1);
         mBtnRadio2 = view.findViewById(R.id.radioButton2);
         mBtnSetReminder = view.findViewById(R.id.btn_set_reminder);
@@ -92,11 +92,12 @@ public class HandWashDialog extends BottomSheetDialogFragment {
 
         if (hour == 1) {
             alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_HOUR, alarmIntent);
+            Generics.setSharedPref(getContext(),"handWashSet", "true");
             Toast.makeText(getContext(), "We will remind you every 1 hour", Toast.LENGTH_SHORT).show();
         } else {
             alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 7200000, alarmIntent);
+            Generics.setSharedPref(getContext(),"handWashSet", "true");
             Toast.makeText(getContext(), "We will remind you every 2 hours", Toast.LENGTH_SHORT).show();
         }
-
     }
 }

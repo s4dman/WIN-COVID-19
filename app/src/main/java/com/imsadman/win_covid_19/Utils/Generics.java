@@ -3,6 +3,7 @@ package com.imsadman.win_covid_19.Utils;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
@@ -14,6 +15,7 @@ public class Generics {
     private static final String TAG = "Generics";
 
     public static void createNotificationChannel(Context context, String title, String text, String channelId) {
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = title;
             String description = text;
@@ -37,5 +39,16 @@ public class Generics {
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
 
         notificationManagerCompat.notify(id, builder.build());
+    }
+
+    public static boolean setSharedPref(Context context, String name, String value) {
+        SharedPreferences.Editor editor = context.getSharedPreferences("IS_ALARM_SET", 0).edit();
+        editor.putString(name, value);
+        editor.apply();
+        return true;
+    }
+
+    public static SharedPreferences getSharedPreferences(Context context) {
+        return context.getSharedPreferences("IS_ALARM_SET", 0);
     }
 }
