@@ -27,7 +27,7 @@ import com.imsadman.win_covid_19.Utils.Generics;
 import java.util.Calendar;
 
 public class AvoidTouchDialog extends BottomSheetDialogFragment {
-    private static final String TAG = "ReminderBottomSheetDial";
+    private static final String TAG = "AvoidTouchDialog";
 
     private TextView mDialogText;
     private RadioButton mRadioBtn1, mBtnRadio2;

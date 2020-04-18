@@ -18,17 +18,16 @@ public class AlertReceiver extends BroadcastReceiver {
 
         String chanelId = intent.getExtras().getString("channelId");
 
-        if (chanelId.equals("avoidTouching")) {
-
-            Generics.notificationManager(context, chanelId, "Avoid Face Touching", "Do Not Touch Your Face", 2);
-
-        } else if (chanelId.equals("notifyHandWash")) {
+        if (chanelId.equals("notifyHandWash")) {
 
             Generics.notificationManager(context, chanelId, "Hand Wash Reminder", "It's Time to Wash Your Hands", 1);
 
+        } else if (chanelId.equals("avoidTouching")) {
+
+            Generics.notificationManager(context, chanelId, "Avoid Face Touching", "Do Not Touch Your Face", 2);
 
         } else {
-            Log.d(TAG, "onReceive: Nothing");
+            Generics.notificationManager(context, chanelId, "House Clean Reminder", "It's Time to Clean Your House", 3);
         }
 
     }

@@ -15,6 +15,11 @@
     <string name="avoid_touch_text">We will remind you not to touch your face:</string>
     <string name="house_clean_text">We will remind you to clean your house:</string>
     <string name="radio_every_1_hour">EVERY 1 HOUR</string>
+    <string name="radio_every_editText">EVERY </string>
+    <string name="radio_day_editText"> DAY at 9.00 AM</string>
+    <string name="radio_colon_editText"> : </string>
     <string name="radio_every_2_hour">EVERY 2 HOURS</string>
     <string name="set_reminder">SET REMINDER</string>
+    <string name="no_reminder_text">Currently you don\'t have any reminder</string>
+    <string name="your_reminder_text">Your\'r current reminders:</string>
 </resources>
