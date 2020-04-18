@@ -4,9 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +31,7 @@ public class ReminderFragment extends Fragment {
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
     private Context mContext;
-    private String handWashSet, mAvoidToucSet, mcleanHouseSet;
+    private String mHandWashSet, mAvoidToucSet, mCleanHouseSet;
 
 
     @Override
@@ -51,9 +49,9 @@ public class ReminderFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        handWashSet = "false";
+        mHandWashSet = "false";
         mAvoidToucSet = "false";
-        mcleanHouseSet = "false";
+        mCleanHouseSet = "false";
 
         initViews(view);
     }
@@ -77,14 +75,28 @@ public class ReminderFragment extends Fragment {
 
     private void getAlarmStatus() {
 
-        handWashSet = Generics.getSharedPreferences(getContext()).getString("handWashSet", null);
-        if (handWashSet != null && handWashSet.equals("true")) {
+        mHandWashSet = Generics.getSharedPreferences(getContext()).getString("pref_handWash", null);
+        if (mHandWashSet != null && mHandWashSet.equals("true")) {
             mReminderStatus.setText(getString(R.string.your_reminder_text));
             mHandWashStatus.setVisibility(View.VISIBLE);
             mDelHandWash.setVisibility(View.VISIBLE);
-        } else mReminderStatus.setText(getString(R.string.no_reminder_text));
+        }
+        /*TODO: FIX: Reminder status durations are not dynamic*/
+
+        mAvoidToucSet = Generics.getSharedPreferences(getContext()).getString("pref_avoidTouch", null);
+        if (mAvoidToucSet != null && mAvoidToucSet.equals("true")) {
+            mReminderStatus.setText(getString(R.string.your_reminder_text));
+            mAvoidTouchStatus.setVisibility(View.VISIBLE);
+            mDelAvoidTouch.setVisibility(View.VISIBLE);
+        }
 
 
+        mCleanHouseSet = Generics.getSharedPreferences(getContext()).getString("pref_cleanHouse", null);
+        if (mCleanHouseSet != null && mCleanHouseSet.equals("true")) {
+            mReminderStatus.setText(getString(R.string.your_reminder_text));
+            mCleanHouseStatus.setVisibility(View.VISIBLE);
+            mDelCleanHouse.setVisibility(View.VISIBLE);
+        }
     }
 
     private void onClick() {
@@ -113,6 +125,7 @@ public class ReminderFragment extends Fragment {
             }
         });
 
+
         mDelHandWash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,10 +134,40 @@ public class ReminderFragment extends Fragment {
                 intent.putExtra("channelId", "notifyHandWash");
                 alarmIntent = PendingIntent.getBroadcast(getContext(), 1, intent, 0);
                 alarmMgr.cancel(alarmIntent);
-                Generics.setSharedPref(getContext(), "handWashSet", "false");
+                Generics.setSharedPref(getContext(), "pref_handWash", "false");
                 mHandWashStatus.setVisibility(View.GONE);
                 mDelHandWash.setVisibility(View.GONE);
                 Toast.makeText(mContext, "Hand Wash Reminder Canceled", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mDelAvoidTouch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alarmMgr = (AlarmManager) getContext().getSystemService(ALARM_SERVICE);
+                Intent intent = new Intent(getContext(), AlertReceiver.class);
+                intent.putExtra("channelId", "avoidTouching");
+                alarmIntent = PendingIntent.getBroadcast(getContext(), 2, intent, 0);
+                alarmMgr.cancel(alarmIntent);
+                Generics.setSharedPref(getContext(), "pref_avoidTouch", "false");
+                mAvoidTouchStatus.setVisibility(View.GONE);
+                mDelAvoidTouch.setVisibility(View.GONE);
+                Toast.makeText(mContext, "Avoid Face Touch Reminder Canceled", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mDelCleanHouse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alarmMgr = (AlarmManager) getContext().getSystemService(ALARM_SERVICE);
+                Intent intent = new Intent(getContext(), AlertReceiver.class);
+                intent.putExtra("channelId", "cleanHouse");
+                alarmIntent = PendingIntent.getBroadcast(getContext(), 3, intent, 0);
+                alarmMgr.cancel(alarmIntent);
+                Generics.setSharedPref(getContext(), "pref_cleanHouse", "false");
+                mCleanHouseStatus.setVisibility(View.GONE);
+                mDelCleanHouse.setVisibility(View.GONE);
+                Toast.makeText(mContext, "House Cleaning Reminder Canceled", Toast.LENGTH_SHORT).show();
             }
         });
     }

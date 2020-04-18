@@ -92,11 +92,11 @@ public class HandWashDialog extends BottomSheetDialogFragment {
 
         if (hour == 1) {
             alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_HOUR, alarmIntent);
-            Generics.setSharedPref(getContext(),"handWashSet", "true");
+            Generics.setSharedPref(getContext(),"pref_handWash", "true");
             Toast.makeText(getContext(), "We will remind you every 1 hour", Toast.LENGTH_SHORT).show();
         } else {
             alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 7200000, alarmIntent);
-            Generics.setSharedPref(getContext(),"handWashSet", "true");
+            Generics.setSharedPref(getContext(),"pref_handWash", "true");
             Toast.makeText(getContext(), "We will remind you every 2 hours", Toast.LENGTH_SHORT).show();
         }
     }

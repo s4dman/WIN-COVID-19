@@ -163,6 +163,7 @@
         android:layout_marginEnd="8dp"
         android:text="Avoid Face Touching Reminder set for every 2 hour"
         android:textSize="18dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/touch_reminder_delete"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/status_hand_wash" />
@@ -173,6 +174,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:src="@drawable/ic_delete_black_24dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/status_avoid_touch"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -184,6 +186,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="House Cleaning Reminder set for every 1 day at 9.00 AM"
+        android:textSize="18dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/house_reminder_delete"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/status_avoid_touch" />
@@ -194,6 +198,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:src="@drawable/ic_delete_black_24dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/status_house_clean"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

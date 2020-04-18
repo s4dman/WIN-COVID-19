@@ -29,8 +29,7 @@ import java.util.Calendar;
 public class AvoidTouchDialog extends BottomSheetDialogFragment {
     private static final String TAG = "AvoidTouchDialog";
 
-    private TextView mDialogText;
-    private RadioButton mRadioBtn1, mBtnRadio2;
+    private RadioButton mRadioBtn1;
     private Button mBtnSetReminder;
 
     private AlarmManager alarmMgr;
@@ -54,7 +53,6 @@ public class AvoidTouchDialog extends BottomSheetDialogFragment {
 
     private void initViews(View view) {
         mRadioBtn1 = view.findViewById(R.id.avoid_radioButton1);
-        mBtnRadio2 = view.findViewById(R.id.avoid_radioButton2);
         mBtnSetReminder = view.findViewById(R.id.btn_avoid_touch_reminder);
 
         mBtnSetReminder.setOnClickListener(new View.OnClickListener() {
@@ -89,13 +87,12 @@ public class AvoidTouchDialog extends BottomSheetDialogFragment {
         }
 
         if (hour == 1) {
-            Log.d(TAG, "avoidTouchReminder: " + calendar.getTime());
-            Log.d(TAG, "avoidTouchReminder: " + calendar.getTimeInMillis());
-
-            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 30000, alarmIntent);
+            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_HOUR, alarmIntent);
+            Generics.setSharedPref(getContext(),"pref_avoidTouch", "true");
             Toast.makeText(getContext(), "We will remind you every 1 hour", Toast.LENGTH_SHORT).show();
         } else {
-            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 20000, alarmIntent);
+            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 7200000, alarmIntent);
+            Generics.setSharedPref(getContext(),"pref_avoidTouch", "true");
             Toast.makeText(getContext(), "We will remind you every 2 hours", Toast.LENGTH_SHORT).show();
         }
 
