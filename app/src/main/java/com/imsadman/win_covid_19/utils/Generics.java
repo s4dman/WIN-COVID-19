@@ -1,15 +1,22 @@
-package com.imsadman.win_covid_19.Utils;
+package com.imsadman.win_covid_19.utils;
 
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.imsadman.win_covid_19.R;
+import com.imsadman.win_covid_19.ui.reminder.AlertReceiver;
+
+import static android.content.Context.ALARM_SERVICE;
 
 public class Generics {
     private static final String TAG = "Generics";
@@ -50,5 +57,15 @@ public class Generics {
 
     public static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences("IS_ALARM_SET", 0);
+    }
+
+    public static void removeAlarm(Context context, String channelId, int requestCode, String pref_name, String toastText) {
+        AlarmManager alarmMgr = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(context, AlertReceiver.class);
+        intent.putExtra("channelId", channelId);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, requestCode, intent, 0);
+        alarmMgr.cancel(alarmIntent);
+        Generics.setSharedPref(context, pref_name, "false");
+        Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
     }
 }

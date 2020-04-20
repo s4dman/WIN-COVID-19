@@ -3,9 +3,8 @@ package com.imsadman.win_covid_19.ui.reminder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
-import com.imsadman.win_covid_19.Utils.Generics;
+import com.imsadman.win_covid_19.utils.Generics;
 
 public class AlertReceiver extends BroadcastReceiver {
 

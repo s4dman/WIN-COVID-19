@@ -1,4 +1,4 @@
-package com.imsadman.win_covid_19.Utils;
+package com.imsadman.win_covid_19.utils;
 
 import android.app.Activity;
 

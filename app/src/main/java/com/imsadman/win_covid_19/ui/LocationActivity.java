@@ -3,7 +3,6 @@ package com.imsadman.win_covid_19.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,14 +10,13 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.Geofence;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.imsadman.win_covid_19.R;
-import com.imsadman.win_covid_19.Utils.Constants;
+import com.imsadman.win_covid_19.utils.Constants;
 
 import java.util.Arrays;
 

@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.imsadman.win_covid_19.R;
-import com.imsadman.win_covid_19.Utils.Generics;
+import com.imsadman.win_covid_19.utils.Generics;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
