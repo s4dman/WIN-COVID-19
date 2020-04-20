@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1038075504459",
+    "firebase_url": "https://win-covid-19.firebaseio.com",
+    "project_id": "win-covid-19",
+    "storage_bucket": "win-covid-19.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038075504459:android:a56e7f8de593baa6826ace",
+        "android_client_info": {
+          "package_name": "com.imsadman.win_covid_19"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1038075504459-9ps3k57s5m9g4ubr3cpkih6gvfad61ma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCl4ZtQHh3myapjoswrnAksGoCceB-bw4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1038075504459-9ps3k57s5m9g4ubr3cpkih6gvfad61ma.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
