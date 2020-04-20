@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_community_navigation"
+    app:startDestination="@+id/navigation_offers">
+
+    <fragment
+        android:id="@+id/navigation_offers"
+        android:name="com.imsadman.win_covid_19.ui.community.OffersFragment"
+        android:label="@string/title_offers"
+        tools:layout="@layout/fragment_offers" />
+
+    <fragment
+        android:id="@+id/navigation_requests"
+        android:name="com.imsadman.win_covid_19.ui.community.RequestedFragment"
+        android:label="@string/title_requests"
+        tools:layout="@layout/fragment_requests" />
+</navigation>

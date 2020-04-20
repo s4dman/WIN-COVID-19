@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.imsadman.win_covid_19.R;
 import com.imsadman.win_covid_19.ui.reminder.AlertReceiver;
 
@@ -67,5 +69,11 @@ public class Generics {
         alarmMgr.cancel(alarmIntent);
         Generics.setSharedPref(context, pref_name, "false");
         Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+    }
+
+    public static FirebaseFirestore initFirestore(Context context) {
+        FirebaseApp.initializeApp(context);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        return db;
     }
 }
