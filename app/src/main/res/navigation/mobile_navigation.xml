@@ -9,7 +9,7 @@
         android:id="@+id/navigation_home"
         android:name="com.imsadman.win_covid_19.ui.community.CommunityFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_community" />
 
     <fragment
         android:id="@+id/navigation_reminder"
@@ -20,6 +20,6 @@
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.imsadman.win_covid_19.ui.assessment.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_assessment"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

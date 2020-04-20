@@ -1,5 +1,6 @@
 package com.imsadman.win_covid_19.ui.community;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,12 +9,18 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,7 +35,7 @@ public class CommunityFragment extends Fragment {
     private static final String TAG = "CommunityFragment";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_community, container, false);
         return root;
     }
 
@@ -36,13 +43,25 @@ public class CommunityFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Access a Cloud Firestore instance from your Activity
+        BottomNavigationView navView = view.findViewById(R.id.community_nav_view);
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_offers, R.id.navigation_requests)
+                .build();
+        NavController navController = Navigation.findNavController((Activity) getContext(), R.id.community_nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController((AppCompatActivity) getContext(), navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navView, navController);
+
+        intiFirebase();
+
+    }
+
+    private void intiFirebase() {
         FirebaseApp.initializeApp(getContext());
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         //postProduct(db);
-        getProducts(db);
-
     }
 
     private void postProduct(FirebaseFirestore db) {
@@ -64,23 +83,6 @@ public class CommunityFragment extends Fragment {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error adding document", e);
-                    }
-                });
-    }
-
-    private void getProducts(FirebaseFirestore db) {
-        db.collection("products")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
                     }
                 });
     }
