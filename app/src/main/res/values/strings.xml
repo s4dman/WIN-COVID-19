@@ -24,4 +24,7 @@
     <string name="set_reminder">SET REMINDER</string>
     <string name="no_reminder_text">Currently you don\'t have any reminder</string>
     <string name="your_reminder_text">Your\'r current reminders:</string>
+    <string name="post_offer">POST</string>
+    <string name="TEXT_SHARE">List Something you want to share</string>
+    <string name="TEXT_REQUEST">List Something you want to request</string>
 </resources>

@@ -30,7 +30,6 @@ public class CleanHouseDialog extends BottomSheetDialogFragment {
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
 
-    /*TODO: Cancel Alarms*/
 
     @Nullable
     @Override
