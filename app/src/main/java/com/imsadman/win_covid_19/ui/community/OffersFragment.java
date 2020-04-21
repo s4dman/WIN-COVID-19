@@ -53,20 +53,19 @@ public class OffersFragment extends Fragment {
         return root;
     }
 
+
     private void initViews(View root) {
         mRecyclerView = root.findViewById(R.id.recycler_offered_products);
         mFloatingActionButton = root.findViewById(R.id.offer_floatingActionButton);
-
-//        View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_post_product, null);
-
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getOfferedProducts();
         onclick();
+        getOfferedProducts();
     }
 
     private void onclick() {
@@ -97,7 +96,8 @@ public class OffersFragment extends Fragment {
 
                                 if (!name.equals("") && !quantity.equals("") && !category.equals("") && !phoneNumber.equals("")) {
                                     postOffers(name, Integer.parseInt(quantity), category, phoneNumber);
-                                } else Toast.makeText(getContext(), "ERROR! Must fill all the fields.", Toast.LENGTH_LONG).show();
+                                } else
+                                    Toast.makeText(getContext(), "ERROR! Must fill all the fields.", Toast.LENGTH_LONG).show();
 
                             }
                         })
