@@ -24,4 +24,19 @@
     <string name="set_reminder">SET REMINDER</string>
     <string name="no_reminder_text">Currently you don\'t have any reminder</string>
     <string name="your_reminder_text">Your\'r current reminders:</string>
+    <string name="post_offer">POST</string>
+    <string name="TEXT_SHARE">LIST SOMETHING YOU WANT TO SHARE</string>
+    <string name="TEXT_REQUEST">LIST SOMETHING YOU WANT TO REQUEST</string>
+    <string name="assessment_intro">If you think you have coronavirus (COVID-19) symptoms or have been in close contact with someone who has it, use this self-assessment to help determine how to seek further care.</string>
+    <string name="Q1">Are you experiencing any of the following symptoms?</string>
+    <string name="Q1Option">
+        <li>severe difficulty breathing (struggling for each breath, speaking in single words)</li> \n
+        <li>severe chest pain</li>\n
+        <li>having a very hard time waking up</li>\n
+        <li>feeling confused </li>\n
+        <li>lost consciousness</li>\n
+    </string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="official_website">https://www.wrh.on.ca/COVID19AssessmentCentre"</string>
 </resources>
