@@ -13,6 +13,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Please call 911 or go directly to your nearest emergency department. "
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,7 +25,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Or visit WRH COVID-19 ASSESSMENT CENTRE LOCATION : The WRH COVID-19 Assessment Centre is located at the former outpatient clinic entrance (off Goyeau  St.). It is a segregated area next to the Ouellette campus emergency department.  Please note, there will be no access into the main hospital from this area or access into the COVID-19 Assessment Centre from the main hospital. All-access will be from the entrance off of Goyeau Street.  "
+        android:text="Or visit WRH COVID-19 ASSESSMENT CENTRE LOCATION : The WRH COVID-19 Assessment Centre is located at the former outpatient clinic entrance (off Goyeau  St.). It is a segregated area next to the Ouellette campus emergency department.  Please note, there will be no access into the main hospital from this area or access into the COVID-19 Assessment Centre from the main hospital. All-access will be from the entrance off of Goyeau Street."
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />

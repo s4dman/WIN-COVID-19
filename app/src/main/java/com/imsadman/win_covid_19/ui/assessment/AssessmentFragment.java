@@ -15,7 +15,7 @@ import com.imsadman.win_covid_19.R;
 
 public class AssessmentFragment extends Fragment {
 
-    private View mQues1, mPositivePage;
+    private View mQues1, mQues2, mPositivePage;
     private Button mYesBtn, mNoBtn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -27,6 +27,7 @@ public class AssessmentFragment extends Fragment {
 
     private void initViews(View root) {
         mQues1 = root.findViewById(R.id.layout_ques_1);
+        mQues2 = root.findViewById(R.id.layout_ques_2);
         mPositivePage = root.findViewById(R.id.layout_positive_result);
         mYesBtn = root.findViewById(R.id.assess_btn_yes);
         mNoBtn = root.findViewById(R.id.assess_btn_no);
@@ -46,7 +47,8 @@ public class AssessmentFragment extends Fragment {
         mNoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                mQues1.setVisibility(View.GONE);
+                mQues2.setVisibility(View.VISIBLE);
             }
         });
     }

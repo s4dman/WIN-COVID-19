@@ -29,13 +29,21 @@
     <string name="TEXT_REQUEST">LIST SOMETHING YOU WANT TO REQUEST</string>
     <string name="assessment_intro">If you think you have coronavirus (COVID-19) symptoms or have been in close contact with someone who has it, use this self-assessment to help determine how to seek further care.</string>
     <string name="Q1">Are you experiencing any of the following symptoms?</string>
+
+    <string name="Q2"> Are you experiencing any of the following symptoms (or a combination of these symptoms)?\n
+        <li>fever</li>\n
+        <li>new cough</li>\n
+        <li>difficulty breathing (for example, struggling for each breath, cannot hold breath for more than 10 seconds)\n</li>
+    </string>
+
     <string name="Q1Option">
         <li>severe difficulty breathing (struggling for each breath, speaking in single words)</li> \n
         <li>severe chest pain</li>\n
         <li>having a very hard time waking up</li>\n
         <li>feeling confused </li>\n
-        <li>lost consciousness</li>\n
+        <li>lost consciousness</li>
     </string>
+
     <string name="yes">YES</string>
     <string name="no">NO</string>
     <string name="official_website">https://www.wrh.on.ca/COVID19AssessmentCentre"</string>
