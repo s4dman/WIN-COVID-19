@@ -28,23 +28,46 @@
     <string name="TEXT_SHARE">LIST SOMETHING YOU WANT TO SHARE</string>
     <string name="TEXT_REQUEST">LIST SOMETHING YOU WANT TO REQUEST</string>
     <string name="assessment_intro">If you think you have coronavirus (COVID-19) symptoms or have been in close contact with someone who has it, use this self-assessment to help determine how to seek further care.</string>
-    <string name="Q1">Are you experiencing any of the following symptoms?</string>
+
+    <string name="Q1">Are you experiencing any of the following symptoms? \n
+    <li>severe difficulty breathing (struggling for each breath, speaking in single words)</li> \n
+        <li>severe chest pain</li>\n
+        <li>having a very hard time waking up</li>\n
+        <li>feeling confused </li>\n
+        <li>lost consciousness</li></string>
 
     <string name="Q2"> Are you experiencing any of the following symptoms (or a combination of these symptoms)?\n
         <li>fever</li>\n
         <li>new cough</li>\n
-        <li>difficulty breathing (for example, struggling for each breath, cannot hold breath for more than 10 seconds)\n</li>
+        <li>difficulty breathing (for example, struggling for each breath, cannot hold breath for more than 10 seconds)</li>
     </string>
 
-    <string name="Q1Option">
-        <li>severe difficulty breathing (struggling for each breath, speaking in single words)</li> \n
-        <li>severe chest pain</li>\n
-        <li>having a very hard time waking up</li>\n
-        <li>feeling confused </li>\n
-        <li>lost consciousness</li>
+    <string name="Q3"> Have you travelled outside of Canada in the last 14 days? </string>
+    <string name="Q4"> Has someone you are in close contact with tested positive for COVID-19?  </string>
+    <string name="Q5"> Are you in close contact with a person who either: \n
+        <li>is sick with new respiratory symptoms? \n</li>
+            or \n
+        <li>recently travelled outside of Canada?</li> \n
+        Respiratory symptoms can include fever, cough or difficulty breathing.
     </string>
 
     <string name="yes">YES</string>
     <string name="no">NO</string>
     <string name="official_website">https://www.wrh.on.ca/COVID19AssessmentCentre"</string>
+    <string name="result_maybe">
+        Do not leave your home. Do not go into a hospital or clinic. \n \n
+        First, contact either: \n
+        <li>your primary care provider (for example, family doctor) over the phone or online</li> \n
+        <li>Telehealth Ontario at 1-866-797-0000 (to speak with a registered nurse)</li> \n
+        <li>They will tell you what to do next.</li> \n
+    </string>
+    <string name="result_isolate">
+        Stay at home as much as possible. \n
+        You do not need to contact a doctor or Telehealth Ontario for an assessment. \n \n
+        In case of your symptoms began, you must stay at home for 14 days after. \n
+        In that case : \n
+        <li>Stay at home for 14 days</li>\n
+        <li>Tell people you’ve been in contact with</li>\n
+        <li>Monitor your health</li>\n
+    </string>
 </resources>
