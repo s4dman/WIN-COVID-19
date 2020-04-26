@@ -1,5 +1,7 @@
 package com.imsadman.win_covid_19.utils;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
@@ -9,11 +11,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
@@ -21,6 +26,8 @@ import androidx.core.content.ContextCompat;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.imsadman.win_covid_19.R;
+import com.imsadman.win_covid_19.ui.LocationActivity;
+import com.imsadman.win_covid_19.ui.MainActivity;
 import com.imsadman.win_covid_19.ui.reminder.AlertReceiver;
 
 import static android.content.Context.ALARM_SERVICE;
@@ -81,4 +88,5 @@ public class Generics {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         return db;
     }
+
 }
