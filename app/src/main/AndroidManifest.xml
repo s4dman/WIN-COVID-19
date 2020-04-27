@@ -12,8 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".ui.MainActivity"></activity>
+        <activity android:name=".ui.profile.LoginActivity"></activity>
+        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.profile.SignupActivity" />
         <activity
             android:name=".ui.LocationActivity"
             android:label="@string/app_name"
@@ -27,10 +28,9 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBYPIXZInwFjimC27DfhrzYSDUUdNk1cAk"/>
+            android:value="AIzaSyBYPIXZInwFjimC27DfhrzYSDUUdNk1cAk" />
 
-        <receiver android:name=".ui.reminder.AlertReceiver"/>
-
+        <receiver android:name=".ui.reminder.AlertReceiver" />
     </application>
 
 </manifest>

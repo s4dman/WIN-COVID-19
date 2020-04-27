@@ -22,6 +22,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -33,13 +35,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RequestedFragment extends Fragment {
-    private static final String TAG = "RequestedFragment";
+public class RequestsFragment extends Fragment {
+    private static final String TAG = "RequestsFragment";
 
     private EditText mProductName, mProductQuantity, mProductCategory, mPhoneNumber;
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFloatingActionButton;
     private ArrayList<ProductEntity> mProductEntitiesList = new ArrayList<>();
+    private String mUid;
+
 
     @Nullable
     @Override
@@ -58,53 +62,68 @@ public class RequestedFragment extends Fragment {
         onclick();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (Generics.getUser() != null) {
+            mUid = Generics.getUser().getUid();
+        }
+    }
+
     private void onclick() {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*TODO: Cleanup and Data Validation*/
-                View dialog = LayoutInflater.from(getContext()).inflate(R.layout.layout_post_product, null);
-                AlertDialog.Builder alertDialogBuilderList = new AlertDialog.Builder(getContext());
-                alertDialogBuilderList.setView(dialog);
+                if (mUid != null) {
+                    /*TODO: Cleanup and Data Validation*/
+                    View dialog = LayoutInflater.from(getContext()).inflate(R.layout.layout_post_product, null);
+                    AlertDialog.Builder alertDialogBuilderList = new AlertDialog.Builder(getContext());
+                    alertDialogBuilderList.setView(dialog);
 
-                mProductName = dialog.findViewById(R.id.edit_product_name);
-                mProductQuantity = dialog.findViewById(R.id.edit_product_quantity);
-                mProductCategory = dialog.findViewById(R.id.edit_product_category);
-                mPhoneNumber = dialog.findViewById(R.id.edit_phone_number);
+                    mProductName = dialog.findViewById(R.id.edit_product_name);
+                    mProductQuantity = dialog.findViewById(R.id.edit_product_quantity);
+                    mProductCategory = dialog.findViewById(R.id.edit_product_category);
+                    mPhoneNumber = dialog.findViewById(R.id.edit_phone_number);
 
-                alertDialogBuilderList.setCancelable(true)
-                        .setTitle(R.string.TEXT_REQUEST)
-                        .setPositiveButton("REQUEST", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                    alertDialogBuilderList.setCancelable(true)
+                            .setTitle(R.string.TEXT_REQUEST)
+                            .setPositiveButton("REQUEST", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
 
-                                String name = mProductName.getText().toString();
-                                String quantity = mProductQuantity.getText().toString();
-                                String category = mProductCategory.getText().toString();
-                                String phoneNumber = mPhoneNumber.getText().toString();
+                                    String name = mProductName.getText().toString();
+                                    String quantity = mProductQuantity.getText().toString();
+                                    String category = mProductCategory.getText().toString();
+                                    String phoneNumber = mPhoneNumber.getText().toString();
 
-                                if (!name.equals("") && !quantity.equals("") && !category.equals("") && !phoneNumber.equals("")) {
-                                    postRequests(name, Integer.parseInt(quantity), category, phoneNumber);
-                                } else
-                                    Toast.makeText(getContext(), "ERROR! Must fill all the fields.", Toast.LENGTH_LONG).show();
+                                    if (!name.equals("") && !quantity.equals("") && !category.equals("") && !phoneNumber.equals("")) {
+                                        postRequests(name, Integer.parseInt(quantity), category, phoneNumber);
+                                    } else
+                                        Toast.makeText(getContext(), "ERROR! Must fill all the fields.", Toast.LENGTH_LONG).show();
 
-                            }
-                        })
-                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                AlertDialog alertDialog = alertDialogBuilderList.create();
-                alertDialog.show();
-                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(getContext(), R.color.darkRed));
+                                }
+                            })
+                            .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    AlertDialog alertDialog = alertDialogBuilderList.create();
+                    alertDialog.show();
+                    alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(getContext(), R.color.darkRed));
+                } else {
+                    Toast.makeText(getContext(), "Login to Create Request", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
 
     private void postRequests(String name, int quantity, String category, String phoneNumber) {
         Map<String, Object> product = new HashMap<>();
+        product.put("uid", mUid);
         product.put("requested_name", name);
         product.put("requested_quantity", quantity);
         product.put("requested_category", category);
@@ -168,7 +187,7 @@ public class RequestedFragment extends Fragment {
     private void initRecyclerView(ArrayList<ProductEntity> result) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        RequestedAdapter requestedAdapter = new RequestedAdapter(getContext(), result);
-        mRecyclerView.setAdapter(requestedAdapter);
+        RequestsAdapter requestsAdapter = new RequestsAdapter(getContext(), result);
+        mRecyclerView.setAdapter(requestsAdapter);
     }
 }

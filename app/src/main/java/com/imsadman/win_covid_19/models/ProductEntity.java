@@ -6,6 +6,7 @@ import com.google.firebase.firestore.IgnoreExtraProperties;
 public class ProductEntity {
     private static final String TAG = "ProductEntity";
 
+    private String uid;
     private String offered_id;
     private String offered_name;
     private int offered_quantity;
@@ -20,7 +21,8 @@ public class ProductEntity {
     public ProductEntity() {
     }
 
-    public ProductEntity(String offered_id, String offered_name, int offered_quantity, String offered_category, String offered_phone_number, String requested_product_id, String requested_name, int requested_quantity, String requested_category, String requested_phone_number) {
+    public ProductEntity(String uid, String offered_id, String offered_name, int offered_quantity, String offered_category, String offered_phone_number, String requested_product_id, String requested_name, int requested_quantity, String requested_category, String requested_phone_number) {
+        this.uid = uid;
         this.offered_id = offered_id;
         this.offered_name = offered_name;
         this.offered_quantity = offered_quantity;
@@ -31,6 +33,10 @@ public class ProductEntity {
         this.requested_quantity = requested_quantity;
         this.requested_category = requested_category;
         this.requested_phone_number = requested_phone_number;
+    }
+
+    public String getUid() {
+        return uid;
     }
 
     public String getOffered_id() {

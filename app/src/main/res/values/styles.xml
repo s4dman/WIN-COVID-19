@@ -6,17 +6,21 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:fontFamily">@font/oxygen</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="EditTextTintTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">@color/colorText</item>
-        <item name="android:fontFamily">@font/oxygen</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:fontFamily">@font/oxygen</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">18sp</item>
     </style>
 </resources>
