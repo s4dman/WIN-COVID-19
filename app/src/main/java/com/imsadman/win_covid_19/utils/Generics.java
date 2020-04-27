@@ -23,6 +23,12 @@ import static android.content.Context.ALARM_SERVICE;
 public class Generics {
     private static final String TAG = "Generics";
 
+    private static String PLACES_API_KEY = "AIzaSyBYPIXZInwFjimC27DfhrzYSDUUdNk1cAk";
+
+    public static String getPlacesApiKey() {
+        return PLACES_API_KEY;
+    }
+
     public static void createNotificationChannel(Context context, String title, String text, String channelId) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

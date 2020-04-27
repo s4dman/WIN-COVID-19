@@ -63,6 +63,8 @@ dependencies {
 
     //Firestore
     implementation 'com.google.firebase:firebase-firestore:21.4.2'
+    //Firebase Auth
+    implementation 'com.google.firebase:firebase-auth:19.3.1'
     //Cardview
     implementation "androidx.cardview:cardview:1.0.0"
 

@@ -3,9 +3,6 @@
     package="com.imsadman.win_covid_19">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
@@ -32,12 +29,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBYPIXZInwFjimC27DfhrzYSDUUdNk1cAk"/>
 
-        <service android:name=".ui.GeofenceTransitionService" />
         <receiver android:name=".ui.reminder.AlertReceiver"/>
-
-        <service
-            android:name=".ExampleJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
 
     </application>
 

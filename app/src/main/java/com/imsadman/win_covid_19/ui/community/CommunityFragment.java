@@ -42,13 +42,6 @@ public class CommunityFragment extends Fragment {
         NavigationUI.setupActionBarWithNavController((AppCompatActivity) getContext(), navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        initFirebase();
-
-    }
-
-    private void initFirebase() {
-        FirebaseApp.initializeApp(getContext());
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     }
 }
