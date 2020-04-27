@@ -1,13 +1,13 @@
 package com.imsadman.win_covid_19.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
@@ -17,18 +17,24 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.imsadman.win_covid_19.R;
 import com.imsadman.win_covid_19.utils.Constants;
+import com.imsadman.win_covid_19.utils.Generics;
 
 import java.util.Arrays;
 
 public class LocationActivity extends AppCompatActivity {
     private static final String TAG = Activity.class.getSimpleName();
-    private Button mSaveBtn;
+    private TextView mSaveBtn;
+    private String mLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location);
+        mLocation = Generics.getSharedPreferences(this).getString("PREF_LOCATION", null);
+        if (mLocation != null && !"".equals(mLocation)) {
+            startActivity(new Intent(LocationActivity.this, MainActivity.class));
+        }
 
+        setContentView(R.layout.activity_location);
         init();
     }
 
@@ -41,7 +47,7 @@ public class LocationActivity extends AppCompatActivity {
 
     private void initViews() {
         mSaveBtn = findViewById(R.id.btn_save_location);
-
+        mSaveBtn.setText(R.string.continue_btn);
         onClick();
     }
 
@@ -49,6 +55,7 @@ public class LocationActivity extends AppCompatActivity {
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Generics.setSharedPref(getApplicationContext(), "PREF_LOCATION", mLocation);
                 Intent mainActivity = new Intent(LocationActivity.this, MainActivity.class);
                 startActivity(mainActivity);
             }
@@ -68,17 +75,14 @@ public class LocationActivity extends AppCompatActivity {
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ADDRESS_COMPONENTS, Place.Field.NAME));
 
-        getPlaces(autocompleteFragment);
-
-    }
-
-    private void getPlaces(AutocompleteSupportFragment autocompleteFragment) {
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
+                Log.i(TAG, "Place: " + place.getName() + ", " + place.getAddressComponents().asList().get(3).getName());
+                mLocation = place.getAddressComponents().asList().get(3).getName();
+                mSaveBtn.setEnabled(true);
             }
 
             @Override
@@ -86,5 +90,6 @@ public class LocationActivity extends AppCompatActivity {
                 Log.i(TAG, "An error occurred: " + status);
             }
         });
+
     }
 }

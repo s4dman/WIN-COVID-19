@@ -9,20 +9,35 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.imsadman.win_covid_19.R;
+import com.imsadman.win_covid_19.models.ProductEntity;
+import com.imsadman.win_covid_19.models.TestCenterEntity;
+import com.imsadman.win_covid_19.utils.Generics;
+
+import java.util.ArrayList;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class AssessmentFragment extends Fragment {
 
-    private TextView mAssess;
-    private View mPositivePage, mMaybePage, mIsolatePage;
+    private TextView mAssess, mTestCenterName, mTestCenterSite;
+    private View mPositivePage, mMaybePage, mIsolatePage, mTestCenterPage;
     private Button mQ1YesBtn, mQ1NoBtn, mQ2YesBtn, mQ2NoBtn, mQ3YesBtn, mQ3NoBtn, mQ4YesBtn, mQ4NoBtn, mQ5YesBtn, mQ5NoBtn;
     private ConstraintLayout mQ1Layout, mQ2Layout, mQ3Layout, mQ4Layout, mQ5Layout;
     private Boolean mSymptoms = false;
+    private String mLocation;
+    private ArrayList<TestCenterEntity> mTestCenterEntitiesList = new ArrayList<>();
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -31,11 +46,25 @@ public class AssessmentFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mLocation = Generics.getSharedPreferences(getContext()).getString("PREF_LOCATION", null);
+
+        FirebaseApp.initializeApp(getContext());
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        getTestCenter();
+    }
+
     private void initViews(View root) {
         mAssess = root.findViewById(R.id.text_assess);
         mPositivePage = root.findViewById(R.id.layout_positive_result);
         mMaybePage = root.findViewById(R.id.layout_maybe_result);
         mIsolatePage = root.findViewById(R.id.layout_isolate_result);
+        mTestCenterPage = root.findViewById(R.id.layout_hospital_info);
+        mTestCenterName = mTestCenterPage.findViewById(R.id.hospital_name);
+        mTestCenterSite = mTestCenterPage.findViewById(R.id.hospital_website);
+
         mQ1YesBtn = root.findViewById(R.id.q1_btn_yes);
         mQ1NoBtn = root.findViewById(R.id.q1_btn_no);
         mQ2YesBtn = root.findViewById(R.id.q2_btn_yes);
@@ -46,6 +75,7 @@ public class AssessmentFragment extends Fragment {
         mQ4NoBtn = root.findViewById(R.id.q4_btn_no);
         mQ5YesBtn = root.findViewById(R.id.q5_btn_yes);
         mQ5NoBtn = root.findViewById(R.id.q5_btn_no);
+
         mQ1Layout = root.findViewById(R.id.ques1);
         mQ2Layout = root.findViewById(R.id.ques2);
         mQ3Layout = root.findViewById(R.id.ques3);
@@ -62,6 +92,9 @@ public class AssessmentFragment extends Fragment {
                 mAssess.setVisibility(View.GONE);
                 mQ1Layout.setVisibility(View.GONE);
                 mPositivePage.setVisibility(View.VISIBLE);
+                mTestCenterName.setText(mTestCenterEntitiesList.get(0).getHospital_name());
+                mTestCenterSite.setText(mTestCenterEntitiesList.get(0).getWebsite());
+
             }
         });
 
@@ -169,5 +202,25 @@ public class AssessmentFragment extends Fragment {
                 }
             });
         }
+    }
+
+    private void getTestCenter() {
+        Generics.initFirestore(getContext()).collection("test_centers")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                TestCenterEntity testCenterEntity = document.toObject(TestCenterEntity.class);
+                                if (mLocation.equals(testCenterEntity.getCity())) {
+                                    mTestCenterEntitiesList.add(testCenterEntity);
+                                }
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
     }
 }

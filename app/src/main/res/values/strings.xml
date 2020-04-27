@@ -50,17 +50,14 @@
         <li>recently travelled outside of Canada?</li> \n
         Respiratory symptoms can include fever, cough or difficulty breathing.
     </string>
-
+    <string name="continue_btn"><u>Continue</u></string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
     <string name="official_website">https://www.wrh.on.ca/COVID19AssessmentCentre"</string>
     <string name="result_maybe">
-        Do not leave your home. Do not go into a hospital or clinic. \n \n
-        First, contact either: \n
-        <li>your primary care provider (for example, family doctor) over the phone or online</li> \n
-        <li>Telehealth Ontario at 1-866-797-0000 (to speak with a registered nurse)</li> \n
-        <li>They will tell you what to do next.</li> \n
+        Contact a doctor or Tele-health Ontario. You may be eligible for a COVID-19 test.\n
     </string>
+    <string name="more_info">More information about your nearest Test center:</string>
     <string name="result_isolate">
         Stay at home as much as possible. \n
         You do not need to contact a doctor or Telehealth Ontario for an assessment. \n \n
@@ -69,5 +66,7 @@
         <li>Stay at home for 14 days</li>\n
         <li>Tell people you’ve been in contact with</li>\n
         <li>Monitor your health</li>\n
+    </string>
+    <string name="call_911">Please call 911 or go directly to your nearest emergency department.
     </string>
 </resources>
