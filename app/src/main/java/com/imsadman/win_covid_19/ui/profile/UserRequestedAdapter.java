@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
@@ -16,7 +17,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.imsadman.win_covid_19.R;
-import com.imsadman.win_covid_19.models.ProductEntity;
+import com.imsadman.win_covid_19.models.RequestedEntity;
 import com.imsadman.win_covid_19.utils.Generics;
 
 import java.util.List;
@@ -25,11 +26,11 @@ public class UserRequestedAdapter extends RecyclerView.Adapter<UserRequestedAdap
 
     private static final String TAG = "UserRequestedAdapter";
     private Context mContext;
-    private List<ProductEntity> mProductEntityList;
+    private List<RequestedEntity> mRequestedEntityList;
 
-    public UserRequestedAdapter(Context mContext, List<ProductEntity> mProductEntityList) {
+    public UserRequestedAdapter(Context mContext, List<RequestedEntity> mRequestedEntityList) {
         this.mContext = mContext;
-        this.mProductEntityList = mProductEntityList;
+        this.mRequestedEntityList = mRequestedEntityList;
     }
 
     @NonNull
@@ -41,12 +42,12 @@ public class UserRequestedAdapter extends RecyclerView.Adapter<UserRequestedAdap
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        ProductEntity index = mProductEntityList.get(position);
+        RequestedEntity index = mRequestedEntityList.get(position);
 
         holder.name.setText(index.getRequested_name());
         if (index.getRequested_quantity() > 1) {
-            holder.quantity.setText(String.valueOf(index.getRequested_quantity()) + " Pcs");
-        } else holder.quantity.setText(String.valueOf(index.getRequested_quantity()) + " Pc");
+            holder.quantity.setText(index.getRequested_quantity() + " Pcs");
+        } else holder.quantity.setText(index.getRequested_quantity() + " Pc");
 
         holder.category.setText(index.getRequested_category());
         holder.phone.setText(index.getRequested_phone_number());
@@ -57,6 +58,7 @@ public class UserRequestedAdapter extends RecyclerView.Adapter<UserRequestedAdap
                 PopupMenu popup = new PopupMenu(mContext, holder.option);
                 popup.inflate(R.menu.product_menu);
                 MenuItem editItem = popup.getMenu().findItem(R.id.product_edit);
+                editItem.setVisible(false);
                 MenuItem deleteItem = popup.getMenu().findItem(R.id.product_edit);
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -64,7 +66,7 @@ public class UserRequestedAdapter extends RecyclerView.Adapter<UserRequestedAdap
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.product_delete:
-                                deleteProduct(mProductEntityList.get(position).getRequested_products_id());
+                                deleteProduct(mRequestedEntityList.get(position).getRequested_products_id(), mRequestedEntityList.indexOf(mRequestedEntityList.get(position)));
                                 break;
                         }
                         return false;
@@ -77,7 +79,7 @@ public class UserRequestedAdapter extends RecyclerView.Adapter<UserRequestedAdap
 
     @Override
     public int getItemCount() {
-        return mProductEntityList.size();
+        return mRequestedEntityList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -96,19 +98,22 @@ public class UserRequestedAdapter extends RecyclerView.Adapter<UserRequestedAdap
         }
     }
 
-    private void deleteProduct(String id) {
-        DocumentReference productIdRef = Generics.initFirestore(mContext).  collection("requested_products").document(id);
+    private void deleteProduct(String id, final int adapterPosition) {
+        DocumentReference productIdRef = Generics.initFirestore(mContext).collection("requested_products").document(id);
 
         productIdRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.d(TAG, "Delete onSuccess: ");
+                Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
+                mRequestedEntityList.remove(adapterPosition);
+                notifyItemRemoved(adapterPosition);
+                notifyDataSetChanged();
             }
         })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "onFailure: " + e.getMessage());
+                        Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }

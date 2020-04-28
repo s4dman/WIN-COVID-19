@@ -4,9 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -24,7 +21,9 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.imsadman.win_covid_19.R;
-import com.imsadman.win_covid_19.models.ProductEntity;
+import com.imsadman.win_covid_19.models.OfferedEntity;
+import com.imsadman.win_covid_19.models.RequestedEntity;
+import com.imsadman.win_covid_19.ui.LocationActivity;
 import com.imsadman.win_covid_19.ui.MainActivity;
 import com.imsadman.win_covid_19.utils.Generics;
 
@@ -35,8 +34,8 @@ public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
     private TextView mHowdy, mLogin, mSignUp, mLogout, mProductText;
     private RecyclerView mOfferedView, mRequestedView;
-    private ArrayList<ProductEntity> mOfferedList = new ArrayList<>();
-    private ArrayList<ProductEntity> mRequestedList = new ArrayList<>();
+    private ArrayList<OfferedEntity> mOfferedList = new ArrayList<>();
+    private ArrayList<RequestedEntity> mRequestedList = new ArrayList<>();
     private String mUid;
 
     @Nullable
@@ -106,6 +105,7 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
     }
 
     private void getProducts() {
@@ -117,7 +117,7 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            ProductEntity productEntity = document.toObject(ProductEntity.class);
+                            OfferedEntity productEntity = document.toObject(OfferedEntity.class);
                             mOfferedList.add(productEntity);
                         }
                         Log.d(TAG, "onSuccess: " + mOfferedList.size());
@@ -139,8 +139,8 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            ProductEntity productEntity = document.toObject(ProductEntity.class);
-                            mRequestedList.add(productEntity);
+                            RequestedEntity requestedEntity = document.toObject(RequestedEntity.class);
+                            mRequestedList.add(requestedEntity);
                         }
                         initRequestedView(mRequestedList);
                     }
@@ -154,7 +154,7 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    private void initRequestedView(ArrayList<ProductEntity> mRequestedList) {
+    private void initRequestedView(ArrayList<RequestedEntity> mRequestedList) {
         if (mRequestedList.size() > 0) {
             mProductText.setText("Your items are listed below: ");
         }
@@ -166,7 +166,7 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    private void initOfferedView(List<ProductEntity> mProductEntitiesList) {
+    private void initOfferedView(List<OfferedEntity> mProductEntitiesList) {
         if (mProductEntitiesList.size() > 0) {
             mProductText.setText("Your items are listed below: ");
         }
