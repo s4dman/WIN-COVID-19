@@ -24,12 +24,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.imsadman.win_covid_19.R;
 import com.imsadman.win_covid_19.models.ProductEntity;
 import com.imsadman.win_covid_19.utils.Generics;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,17 +63,12 @@ public class RequestsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getRequestedProducts();
-        onclick();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
         if (Generics.getUser() != null) {
             mUid = Generics.getUser().getUid();
         }
+
+        getRequestedProducts();
+        onclick();
     }
 
     private void onclick() {
@@ -122,50 +122,33 @@ public class RequestsFragment extends Fragment {
     }
 
     private void postRequests(String name, int quantity, String category, String phoneNumber) {
-        Map<String, Object> product = new HashMap<>();
-        product.put("uid", mUid);
-        product.put("requested_name", name);
-        product.put("requested_quantity", quantity);
-        product.put("requested_category", category);
-        product.put("requested_phone_number", phoneNumber);
 
-        Generics.initFirestore(getContext()).collection("requested_products")
-                .add(product)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
-    }
+        DocumentReference documentReference = Generics.initFirestore(getContext()).collection("requested_products").document();
+        ProductEntity productEntity = new ProductEntity();
 
-    private void getOfferedProducts() {
+        productEntity.setRequested_name(name);
+        productEntity.setRequested_quantity(quantity);
+        productEntity.setRequested_category(category);
+        productEntity.setRequested_phone_number(phoneNumber);
+        productEntity.setUid(mUid);
+        productEntity.setRequested_products_id(documentReference.getId());
 
-        Generics.initFirestore(getContext()).collection("offered_products")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        documentReference
+                .set(productEntity)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                ProductEntity productEntity = document.toObject(ProductEntity.class);
-                                mProductEntitiesList.add(productEntity);
-                                initRecyclerView(mProductEntitiesList);
-                            }
+                            Toast.makeText(getContext(), "Product Added", Toast.LENGTH_SHORT).show();
                         } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
+                            Toast.makeText(getContext(), "Error! Please Try Again", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
     private void getRequestedProducts() {
+
         Generics.initFirestore(getContext()).collection("requested_products")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

@@ -57,27 +57,45 @@
         app:layout_constraintTop_toBottomOf="@+id/profile_create" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/profile_recyclerView"
+        android:id="@+id/profile_offered_recyclerView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_profile_product"
+        tools:visibility="gone">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/profile_requested_recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_profile_product" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_offered_recyclerView" />
 
     <TextView
         android:id="@+id/profile_logout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:text="Logout"
         android:drawableLeft="@drawable/ic_exit_to_app_black_24dp"
-        android:visibility="gone"
+        android:text="Logout"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_requested_recyclerView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

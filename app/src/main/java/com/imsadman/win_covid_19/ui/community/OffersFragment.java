@@ -22,8 +22,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -129,25 +127,27 @@ public class OffersFragment extends Fragment {
 
     private void postOffers(String name, int quantity, String category, String phoneNumber) {
 
-        Map<String, Object> product = new HashMap<>();
-        product.put("uid", mUid);
-        product.put("offered_name", name);
-        product.put("offered_quantity", quantity);
-        product.put("offered_category", category);
-        product.put("offered_phone_number", phoneNumber);
+        DocumentReference documentReference = Generics.initFirestore(getContext()).collection("offered_products").document();
 
-        Generics.initFirestore(getContext()).collection("offered_products")
-                .add(product)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        ProductEntity productEntity = new ProductEntity();
+
+        productEntity.setOffered_name(name);
+        productEntity.setOffered_quantity(quantity);
+        productEntity.setOffered_category(category);
+        productEntity.setOffered_phone_number(phoneNumber);
+        productEntity.setUid(mUid);
+        productEntity.setOffered_products_id(documentReference.getId());
+
+        documentReference
+                .set(productEntity)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getContext(), "Product Added", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "Error! Please Try Again", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }
