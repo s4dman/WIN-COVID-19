@@ -14,12 +14,12 @@ import com.imsadman.win_covid_19.models.ProductEntity;
 
 import java.util.List;
 
-class OfferedAdapter extends RecyclerView.Adapter<OfferedAdapter.ViewHolder> {
+public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHolder> {
 
     private Context mContext;
     private List<ProductEntity> mProductEntityList;
 
-    public OfferedAdapter(Context mContext, List<ProductEntity> mProductEntityList) {
+    public RequestsAdapter(Context mContext, List<ProductEntity> mProductEntityList) {
         this.mContext = mContext;
         this.mProductEntityList = mProductEntityList;
     }
@@ -33,26 +33,25 @@ class OfferedAdapter extends RecyclerView.Adapter<OfferedAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         ProductEntity index = mProductEntityList.get(position);
 
-        holder.name.setText(index.getOffered_name());
-        if (index.getOffered_quantity() > 1) {
-            holder.quantity.setText(String.valueOf(index.getOffered_quantity()) + " Pcs");
-        } else holder.quantity.setText(String.valueOf(index.getOffered_quantity()) + " Pc");
+        holder.name.setText(index.getRequested_name());
+        if (index.getRequested_quantity() > 1) {
+            holder.quantity.setText(index.getRequested_quantity() + " Pcs");
+        } else holder.quantity.setText(index.getRequested_quantity() + " Pc");
 
-        holder.category.setText(index.getOffered_category());
-        holder.phone.setText(index.getOffered_phone_number());
+        holder.category.setText(index.getRequested_category());
+        holder.phone.setText(index.getRequested_phone_number());
     }
 
     @Override
     public int getItemCount() {
         return mProductEntityList.size();
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
-        TextView name, quantity, category, phone;
+        TextView name, quantity, category, phone, available;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,6 +59,9 @@ class OfferedAdapter extends RecyclerView.Adapter<OfferedAdapter.ViewHolder> {
             quantity = itemView.findViewById(R.id.product_quantity);
             category = itemView.findViewById(R.id.product_category);
             phone = itemView.findViewById(R.id.phone_number);
+            available = itemView.findViewById(R.id.text_available);
+            available.setText("requested");
+
         }
     }
 }

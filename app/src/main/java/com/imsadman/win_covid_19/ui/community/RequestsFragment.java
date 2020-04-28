@@ -22,19 +22,26 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.imsadman.win_covid_19.R;
 import com.imsadman.win_covid_19.models.ProductEntity;
 import com.imsadman.win_covid_19.utils.Generics;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OffersFragment extends Fragment {
-    private static final String TAG = "OffersFragment";
+public class RequestsFragment extends Fragment {
+    private static final String TAG = "RequestsFragment";
 
     private EditText mProductName, mProductQuantity, mProductCategory, mPhoneNumber;
     private RecyclerView mRecyclerView;
@@ -46,7 +53,9 @@ public class OffersFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_offers, container, false);
+        View root = inflater.inflate(R.layout.fragment_requests, container, false);
+        mRecyclerView = root.findViewById(R.id.recycler_requested_products);
+        mFloatingActionButton = root.findViewById(R.id.request_floatingActionButton);
         return root;
     }
 
@@ -54,31 +63,18 @@ public class OffersFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initViews(view);
-        onclick();
-        getOfferedProducts();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
         if (Generics.getUser() != null) {
             mUid = Generics.getUser().getUid();
         }
-    }
 
-    private void initViews(View view) {
-        mRecyclerView = view.findViewById(R.id.recycler_offered_products);
-        mFloatingActionButton = view.findViewById(R.id.offer_floatingActionButton);
+        getRequestedProducts();
+        onclick();
     }
-
 
     private void onclick() {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (mUid != null) {
                     /*TODO: Cleanup and Data Validation*/
                     View dialog = LayoutInflater.from(getContext()).inflate(R.layout.layout_post_product, null);
@@ -91,8 +87,8 @@ public class OffersFragment extends Fragment {
                     mPhoneNumber = dialog.findViewById(R.id.edit_phone_number);
 
                     alertDialogBuilderList.setCancelable(true)
-                            .setTitle(R.string.TEXT_SHARE)
-                            .setPositiveButton("SHARE", new DialogInterface.OnClickListener() {
+                            .setTitle(R.string.TEXT_REQUEST)
+                            .setPositiveButton("REQUEST", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -102,7 +98,7 @@ public class OffersFragment extends Fragment {
                                     String phoneNumber = mPhoneNumber.getText().toString();
 
                                     if (!name.equals("") && !quantity.equals("") && !category.equals("") && !phoneNumber.equals("")) {
-                                        postOffers(name, Integer.parseInt(quantity), category, phoneNumber);
+                                        postRequests(name, Integer.parseInt(quantity), category, phoneNumber);
                                     } else
                                         Toast.makeText(getContext(), "ERROR! Must fill all the fields.", Toast.LENGTH_LONG).show();
 
@@ -118,25 +114,24 @@ public class OffersFragment extends Fragment {
                     alertDialog.show();
                     alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(getContext(), R.color.darkRed));
                 } else {
-                    Toast.makeText(getContext(), "Login to Create Offers", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Login to Create Request", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
     }
 
+    private void postRequests(String name, int quantity, String category, String phoneNumber) {
 
-    private void postOffers(String name, int quantity, String category, String phoneNumber) {
-
-        DocumentReference documentReference = Generics.initFirestore(getContext()).collection("offered_products").document();
-
+        DocumentReference documentReference = Generics.initFirestore(getContext()).collection("requested_products").document();
         ProductEntity productEntity = new ProductEntity();
 
-        productEntity.setOffered_name(name);
-        productEntity.setOffered_quantity(quantity);
-        productEntity.setOffered_category(category);
-        productEntity.setOffered_phone_number(phoneNumber);
+        productEntity.setRequested_name(name);
+        productEntity.setRequested_quantity(quantity);
+        productEntity.setRequested_category(category);
+        productEntity.setRequested_phone_number(phoneNumber);
         productEntity.setUid(mUid);
-        productEntity.setOffered_products_id(documentReference.getId());
+        productEntity.setRequested_products_id(documentReference.getId());
 
         documentReference
                 .set(productEntity)
@@ -152,10 +147,9 @@ public class OffersFragment extends Fragment {
                 });
     }
 
+    private void getRequestedProducts() {
 
-    private void getOfferedProducts() {
-
-        Generics.initFirestore(getContext()).collection("offered_products")
+        Generics.initFirestore(getContext()).collection("requested_products")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -173,11 +167,10 @@ public class OffersFragment extends Fragment {
                 });
     }
 
-
     private void initRecyclerView(ArrayList<ProductEntity> result) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        OffersAdapter offersAdapter = new OffersAdapter(getContext(), result);
-        mRecyclerView.setAdapter(offersAdapter);
+        RequestsAdapter requestsAdapter = new RequestsAdapter(getContext(), result);
+        mRecyclerView.setAdapter(requestsAdapter);
     }
 }

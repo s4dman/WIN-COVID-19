@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#238B4A</color>
-    <color name="colorPrimaryDark">#337249</color>
-    <color name="colorAccent">#238B4A</color>
+    <color name="colorPrimary">#3cba54</color>
+    <color name="colorPrimaryDark">#238B4A</color>
+    <color name="colorAccent">#db3236</color>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorText">#666666</color>
+    <color name="colorText">#000000</color>
     <color name="darkRed">#D32F2F</color>
-
+    <color name="GoogleGreen">#3cba54</color>
+    <color name="GoogleYellow">#f4c20d</color>
+    <color name="GoogleRed">#db3236</color>
+    <color name="GoogleBlue">#4885ed</color>
 
 </resources>

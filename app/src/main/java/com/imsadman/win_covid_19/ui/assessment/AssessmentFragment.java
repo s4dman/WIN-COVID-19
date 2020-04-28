@@ -51,8 +51,6 @@ public class AssessmentFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mLocation = Generics.getSharedPreferences(getContext()).getString("PREF_LOCATION", null);
 
-        FirebaseApp.initializeApp(getContext());
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         getTestCenter();
     }
 

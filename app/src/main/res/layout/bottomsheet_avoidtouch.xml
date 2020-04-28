@@ -25,7 +25,6 @@
         android:paddingRight="20dp"
         android:text="@string/avoid_touch_text"
         android:textAlignment="center"
-        android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

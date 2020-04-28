@@ -14,6 +14,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.imsadman.win_covid_19.R;
 import com.imsadman.win_covid_19.ui.reminder.AlertReceiver;
@@ -22,6 +24,12 @@ import static android.content.Context.ALARM_SERVICE;
 
 public class Generics {
     private static final String TAG = "Generics";
+
+    private static String PLACES_API_KEY = "AIzaSyBYPIXZInwFjimC27DfhrzYSDUUdNk1cAk";
+
+    public static String getPlacesApiKey() {
+        return PLACES_API_KEY;
+    }
 
     public static void createNotificationChannel(Context context, String title, String text, String channelId) {
 
@@ -61,6 +69,11 @@ public class Generics {
         return context.getSharedPreferences("IS_ALARM_SET", 0);
     }
 
+    public static void removeSharedPreferences(Context context, String key) {
+        SharedPreferences preferences = context.getSharedPreferences("IS_ALARM_SET", 0);
+        preferences.edit().remove(key).apply();
+    }
+
     public static void removeAlarm(Context context, String channelId, int requestCode, String pref_name, String toastText) {
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         Intent intent = new Intent(context, AlertReceiver.class);
@@ -75,5 +88,11 @@ public class Generics {
         FirebaseApp.initializeApp(context);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         return db;
+    }
+
+    public static FirebaseUser getUser () {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        return currentUser;
     }
 }

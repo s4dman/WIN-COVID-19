@@ -23,7 +23,7 @@
     <string name="radio_every_2_hour">EVERY 2 HOURS</string>
     <string name="set_reminder">SET REMINDER</string>
     <string name="no_reminder_text">Currently you don\'t have any reminder</string>
-    <string name="your_reminder_text">Your\'r current reminders:</string>
+    <string name="your_reminder_text">Your\'e current reminders:</string>
     <string name="post_offer">POST</string>
     <string name="TEXT_SHARE">LIST SOMETHING YOU WANT TO SHARE</string>
     <string name="TEXT_REQUEST">LIST SOMETHING YOU WANT TO REQUEST</string>
@@ -69,4 +69,15 @@
     </string>
     <string name="call_911">Please call 911 or go directly to your nearest emergency department.
     </string>
+    <string name="title_profile">Profile</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="existing_user_sign_in_here"><u>Existing User Sign-in here</u></string>
 </resources>

@@ -16,7 +16,6 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.imsadman.win_covid_19.R;
-import com.imsadman.win_covid_19.utils.Constants;
 import com.imsadman.win_covid_19.utils.Generics;
 
 import java.util.Arrays;
@@ -65,7 +64,7 @@ public class LocationActivity extends AppCompatActivity {
     private void initPlaces() {
 
         if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(), Constants.getPlacesApiKey());
+            Places.initialize(getApplicationContext(), Generics.getPlacesApiKey());
         } else {
             Log.d(TAG, "Error Places Initialization!");
         }
