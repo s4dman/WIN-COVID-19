@@ -15,6 +15,7 @@ import com.imsadman.win_covid_19.R;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = Activity.class.getSimpleName();
 
+    /*TODO: onBackPressed()*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

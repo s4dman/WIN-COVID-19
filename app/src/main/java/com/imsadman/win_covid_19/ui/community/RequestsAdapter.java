@@ -10,18 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.imsadman.win_covid_19.R;
-import com.imsadman.win_covid_19.models.ProductEntity;
+import com.imsadman.win_covid_19.models.RequestedEntity;
 
 import java.util.List;
 
 public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<ProductEntity> mProductEntityList;
+    private List<RequestedEntity> mRequestedEntityList;
 
-    public RequestsAdapter(Context mContext, List<ProductEntity> mProductEntityList) {
+    public RequestsAdapter(Context mContext, List<RequestedEntity> mRequestedEntityList) {
         this.mContext = mContext;
-        this.mProductEntityList = mProductEntityList;
+        this.mRequestedEntityList = mRequestedEntityList;
     }
 
     @NonNull
@@ -33,7 +33,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ProductEntity index = mProductEntityList.get(position);
+        RequestedEntity index = mRequestedEntityList.get(position);
 
         holder.name.setText(index.getRequested_name());
         if (index.getRequested_quantity() > 1) {
@@ -46,7 +46,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return mProductEntityList.size();
+        return mRequestedEntityList.size();
 
     }
 

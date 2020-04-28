@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,35 +19,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.imsadman.win_covid_19.R;
-import com.imsadman.win_covid_19.models.ProductEntity;
+import com.imsadman.win_covid_19.models.RequestedEntity;
 import com.imsadman.win_covid_19.utils.Generics;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class RequestsFragment extends Fragment {
     private static final String TAG = "RequestsFragment";
 
     private EditText mProductName, mProductQuantity, mProductCategory, mPhoneNumber;
     private RecyclerView mRecyclerView;
+    private TextView mRequestedText;
     private FloatingActionButton mFloatingActionButton;
-    private ArrayList<ProductEntity> mProductEntitiesList = new ArrayList<>();
+    private ArrayList<RequestedEntity> mProductEntitiesList = new ArrayList<>();
     private String mUid;
 
 
@@ -55,6 +46,7 @@ public class RequestsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_requests, container, false);
         mRecyclerView = root.findViewById(R.id.recycler_requested_products);
+        mRequestedText = root.findViewById(R.id.text_requested);
         mFloatingActionButton = root.findViewById(R.id.request_floatingActionButton);
         return root;
     }
@@ -124,17 +116,17 @@ public class RequestsFragment extends Fragment {
     private void postRequests(String name, int quantity, String category, String phoneNumber) {
 
         DocumentReference documentReference = Generics.initFirestore(getContext()).collection("requested_products").document();
-        ProductEntity productEntity = new ProductEntity();
+        RequestedEntity requestedEntity = new RequestedEntity();
 
-        productEntity.setRequested_name(name);
-        productEntity.setRequested_quantity(quantity);
-        productEntity.setRequested_category(category);
-        productEntity.setRequested_phone_number(phoneNumber);
-        productEntity.setUid(mUid);
-        productEntity.setRequested_products_id(documentReference.getId());
+        requestedEntity.setRequested_name(name);
+        requestedEntity.setRequested_quantity(quantity);
+        requestedEntity.setRequested_category(category);
+        requestedEntity.setRequested_phone_number(phoneNumber);
+        requestedEntity.setUid(mUid);
+        requestedEntity.setRequested_products_id(documentReference.getId());
 
         documentReference
-                .set(productEntity)
+                .set(requestedEntity)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -156,8 +148,11 @@ public class RequestsFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                ProductEntity productEntity = document.toObject(ProductEntity.class);
-                                mProductEntitiesList.add(productEntity);
+                                RequestedEntity requestedEntity = document.toObject(RequestedEntity.class);
+                                mProductEntitiesList.add(requestedEntity);
+                                if (mProductEntitiesList.size() > 0) {
+                                    mRequestedText.setVisibility(View.GONE);
+                                }
                                 initRecyclerView(mProductEntitiesList);
                             }
                         } else {
@@ -167,7 +162,7 @@ public class RequestsFragment extends Fragment {
                 });
     }
 
-    private void initRecyclerView(ArrayList<ProductEntity> result) {
+    private void initRecyclerView(ArrayList<RequestedEntity> result) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         RequestsAdapter requestsAdapter = new RequestsAdapter(getContext(), result);

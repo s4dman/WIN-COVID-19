@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,28 +19,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.imsadman.win_covid_19.R;
-import com.imsadman.win_covid_19.models.ProductEntity;
+import com.imsadman.win_covid_19.models.OfferedEntity;
 import com.imsadman.win_covid_19.utils.Generics;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class OffersFragment extends Fragment {
     private static final String TAG = "OffersFragment";
 
     private EditText mProductName, mProductQuantity, mProductCategory, mPhoneNumber;
+    private TextView mOfferedText;
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFloatingActionButton;
-    private ArrayList<ProductEntity> mProductEntitiesList = new ArrayList<>();
+    private ArrayList<OfferedEntity> mProductEntitiesList = new ArrayList<>();
     private String mUid;
 
 
@@ -70,6 +68,7 @@ public class OffersFragment extends Fragment {
 
     private void initViews(View view) {
         mRecyclerView = view.findViewById(R.id.recycler_offered_products);
+        mOfferedText = view.findViewById(R.id.text_requested);
         mFloatingActionButton = view.findViewById(R.id.offer_floatingActionButton);
     }
 
@@ -129,7 +128,7 @@ public class OffersFragment extends Fragment {
 
         DocumentReference documentReference = Generics.initFirestore(getContext()).collection("offered_products").document();
 
-        ProductEntity productEntity = new ProductEntity();
+        OfferedEntity productEntity = new OfferedEntity();
 
         productEntity.setOffered_name(name);
         productEntity.setOffered_quantity(quantity);
@@ -162,8 +161,11 @@ public class OffersFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                ProductEntity productEntity = document.toObject(ProductEntity.class);
+                                OfferedEntity productEntity = document.toObject(OfferedEntity.class);
                                 mProductEntitiesList.add(productEntity);
+                                if (mProductEntitiesList.size() > 0) {
+                                    mOfferedText.setVisibility(View.GONE);
+                                }
                                 initRecyclerView(mProductEntitiesList);
                             }
                         } else {
@@ -174,7 +176,8 @@ public class OffersFragment extends Fragment {
     }
 
 
-    private void initRecyclerView(ArrayList<ProductEntity> result) {
+    private void initRecyclerView(ArrayList<OfferedEntity> result) {
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         OffersAdapter offersAdapter = new OffersAdapter(getContext(), result);

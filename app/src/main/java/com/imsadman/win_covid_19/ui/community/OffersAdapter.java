@@ -10,16 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.imsadman.win_covid_19.R;
-import com.imsadman.win_covid_19.models.ProductEntity;
+import com.imsadman.win_covid_19.models.OfferedEntity;
+import com.imsadman.win_covid_19.models.RequestedEntity;
 
 import java.util.List;
 
 class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<ProductEntity> mProductEntityList;
+    private List<OfferedEntity> mProductEntityList;
 
-    public OffersAdapter(Context mContext, List<ProductEntity> mProductEntityList) {
+    public OffersAdapter(Context mContext, List<OfferedEntity> mProductEntityList) {
         this.mContext = mContext;
         this.mProductEntityList = mProductEntityList;
     }
@@ -34,12 +35,12 @@ class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        ProductEntity index = mProductEntityList.get(position);
+        OfferedEntity index = mProductEntityList.get(position);
 
         holder.name.setText(index.getOffered_name());
         if (index.getOffered_quantity() > 1) {
-            holder.quantity.setText(String.valueOf(index.getOffered_quantity()) + " Pcs");
-        } else holder.quantity.setText(String.valueOf(index.getOffered_quantity()) + " Pc");
+            holder.quantity.setText(index.getOffered_quantity() + " Pcs");
+        } else holder.quantity.setText(index.getOffered_quantity() + " Pc");
 
         holder.category.setText(index.getOffered_category());
         holder.phone.setText(index.getOffered_phone_number());
