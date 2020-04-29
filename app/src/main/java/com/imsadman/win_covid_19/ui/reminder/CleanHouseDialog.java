@@ -69,8 +69,7 @@ public class CleanHouseDialog extends BottomSheetDialogFragment {
     private void cleanHouseReminder(int hour) {
 
         alarmMgr = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getContext(), AlertReceiver.class);
-        intent.putExtra("channelId", "cleanHouse");
+        Intent intent = new Intent(getContext(), CleanHouseReceiver.class);
         alarmIntent = PendingIntent.getBroadcast(getContext(), 3, intent, 0);
 
         Calendar calendar = Calendar.getInstance();

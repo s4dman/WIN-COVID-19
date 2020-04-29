@@ -67,8 +67,7 @@ public class AvoidTouchDialog extends BottomSheetDialogFragment {
     private void avoidTouchReminder(int hour) {
 
         alarmMgr = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getContext(), AlertReceiver.class);
-        intent.putExtra("channelId", "avoidTouching");
+        Intent intent = new Intent(getContext(), AvoidTouchReceiver.class);
         alarmIntent = PendingIntent.getBroadcast(getContext(), 2, intent, 0);
 
         Calendar calendar = Calendar.getInstance();

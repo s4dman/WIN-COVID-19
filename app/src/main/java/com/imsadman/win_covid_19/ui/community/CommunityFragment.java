@@ -14,7 +14,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.imsadman.win_covid_19.R;
 
-/*TODO: Add filter */
 
 public class CommunityFragment extends Fragment {
     private static final String TAG = "CommunityFragment";

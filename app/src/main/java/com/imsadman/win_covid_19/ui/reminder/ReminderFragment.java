@@ -77,7 +77,6 @@ public class ReminderFragment extends Fragment {
             mHandWashStatus.setVisibility(View.VISIBLE);
             mDelHandWash.setVisibility(View.VISIBLE);
         }
-        /*TODO: FIX: Reminder status durations are not dynamic*/
 
         mAvoidToucSet = Generics.getSharedPreferences(getContext()).getString("pref_avoidTouch", null);
         if (mAvoidToucSet != null && mAvoidToucSet.equals("true")) {

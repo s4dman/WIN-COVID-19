@@ -1,6 +1,7 @@
 package com.imsadman.win_covid_19.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,14 +16,11 @@ import com.imsadman.win_covid_19.R;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = Activity.class.getSimpleName();
 
-    /*TODO: onBackPressed()*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_reminder, R.id.navigation_notifications, R.id.navigation_profile)
                 .build();
@@ -30,5 +28,4 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
-
 }
