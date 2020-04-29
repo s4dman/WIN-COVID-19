@@ -70,8 +70,7 @@ public class HandWashDialog extends BottomSheetDialogFragment {
     private void handWashReminder(int hour) {
 
         alarmMgr = (AlarmManager) getContext().getSystemService(ALARM_SERVICE);
-        Intent intent = new Intent(getContext(), AlertReceiver.class);
-        intent.putExtra("channelId", "notifyHandWash");
+        Intent intent = new Intent(getContext(), HandWashReceiver.class);
         alarmIntent = PendingIntent.getBroadcast(getContext(), 1, intent, 0);
 
         Calendar calendar = Calendar.getInstance();

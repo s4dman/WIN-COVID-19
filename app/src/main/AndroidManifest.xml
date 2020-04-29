@@ -30,7 +30,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBYPIXZInwFjimC27DfhrzYSDUUdNk1cAk" />
 
-        <receiver android:name=".ui.reminder.AlertReceiver" />
+        <receiver android:name=".ui.reminder.AvoidTouchReceiver" />
     </application>
 
 </manifest>

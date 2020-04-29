@@ -64,7 +64,9 @@ public class SignupActivity extends AppCompatActivity {
                             Generics.setSharedPref(SignupActivity.this, "IS_LOGGED_IN", "true");
                             Generics.setSharedPref(SignupActivity.this, "USER_EMAIL", user.getEmail());
                             Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
+                            SignupActivity.this.finish();
                         } else {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(SignupActivity.this, "Authentication failed.",

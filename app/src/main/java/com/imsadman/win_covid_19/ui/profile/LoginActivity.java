@@ -63,7 +63,9 @@ public class LoginActivity extends AppCompatActivity {
                             Generics.setSharedPref(LoginActivity.this, "IS_LOGGED_IN", "true");
                             Generics.setSharedPref(LoginActivity.this, "USER_EMAIL", user.getEmail());
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
+                            LoginActivity.this.finish();
                         } else {
                             Toast.makeText(LoginActivity.this, task.getException().getMessage(),
                                     Toast.LENGTH_LONG).show();

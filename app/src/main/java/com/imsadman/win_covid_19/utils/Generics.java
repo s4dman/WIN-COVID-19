@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.imsadman.win_covid_19.R;
-import com.imsadman.win_covid_19.ui.reminder.AlertReceiver;
+import com.imsadman.win_covid_19.ui.reminder.AvoidTouchReceiver;
 
 import static android.content.Context.ALARM_SERVICE;
 
@@ -76,7 +76,7 @@ public class Generics {
 
     public static void removeAlarm(Context context, String channelId, int requestCode, String pref_name, String toastText) {
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        Intent intent = new Intent(context, AlertReceiver.class);
+        Intent intent = new Intent(context, AvoidTouchReceiver.class);
         intent.putExtra("channelId", channelId);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, requestCode, intent, 0);
         alarmMgr.cancel(alarmIntent);
