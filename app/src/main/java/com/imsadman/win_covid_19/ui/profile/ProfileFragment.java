@@ -23,7 +23,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.imsadman.win_covid_19.R;
 import com.imsadman.win_covid_19.models.OfferedEntity;
 import com.imsadman.win_covid_19.models.RequestedEntity;
-import com.imsadman.win_covid_19.ui.LocationActivity;
 import com.imsadman.win_covid_19.ui.MainActivity;
 import com.imsadman.win_covid_19.utils.Generics;
 

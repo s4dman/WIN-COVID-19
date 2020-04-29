@@ -90,7 +90,7 @@ public class Generics {
         return db;
     }
 
-    public static FirebaseUser getUser () {
+    public static FirebaseUser getUser() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         return currentUser;

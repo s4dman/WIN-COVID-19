@@ -13,6 +13,6 @@ public class AvoidTouchReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-            Generics.notificationManager(context, "avoidTouching", "Avoid Face Touching", "Do Not Touch Your Face", 2);
+        Generics.notificationManager(context, "avoidTouching", "Avoid Face Touching", "Do Not Touch Your Face", 2);
     }
 }

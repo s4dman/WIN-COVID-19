@@ -72,21 +72,32 @@ public class AvoidTouchDialog extends BottomSheetDialogFragment {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR));
-        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
         if (hour == 1) {
-            calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND) + 15);
+            calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR) + 1);
         } else {
-            calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND) + 20);
+            calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR) + 2);
         }
+        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
+        calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND));
+
 
         if (hour == 1) {
+
+            if (calendar.before(Calendar.getInstance())) {
+                calendar.add(Calendar.HOUR_OF_DAY, 1);
+            }
+
             alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_HOUR, alarmIntent);
-            Generics.setSharedPref(getContext(),"pref_avoidTouch", "true");
+            Generics.setSharedPref(getContext(), "pref_avoidTouch", "true");
             Toast.makeText(getContext(), "We will remind you every 1 hour", Toast.LENGTH_SHORT).show();
         } else {
+
+            if (calendar.before(Calendar.getInstance())) {
+                calendar.add(Calendar.HOUR_OF_DAY, 2);
+            }
+
             alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 7200000, alarmIntent);
-            Generics.setSharedPref(getContext(),"pref_avoidTouch", "true");
+            Generics.setSharedPref(getContext(), "pref_avoidTouch", "true");
             Toast.makeText(getContext(), "We will remind you every 2 hours", Toast.LENGTH_SHORT).show();
         }
 

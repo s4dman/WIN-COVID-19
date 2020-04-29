@@ -83,7 +83,7 @@ public class CleanHouseDialog extends BottomSheetDialogFragment {
         }
 
         alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), TimeUnit.MILLISECONDS.convert(hour, TimeUnit.DAYS), alarmIntent);
-        Generics.setSharedPref(getContext(),"pref_cleanHouse", "true");
+        Generics.setSharedPref(getContext(), "pref_cleanHouse", "true");
         Toast.makeText(getContext(), "We will remind you every " + hour + " days at 9.00 AM", Toast.LENGTH_SHORT).show();
     }
 }
