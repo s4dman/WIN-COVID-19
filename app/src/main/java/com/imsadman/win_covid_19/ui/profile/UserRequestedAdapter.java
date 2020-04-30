@@ -1,7 +1,6 @@
 package com.imsadman.win_covid_19.ui.profile;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -82,22 +81,6 @@ public class UserRequestedAdapter extends RecyclerView.Adapter<UserRequestedAdap
         return mRequestedEntityList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, quantity, category, phone, available, option;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            name = itemView.findViewById(R.id.product_name);
-            quantity = itemView.findViewById(R.id.product_quantity);
-            category = itemView.findViewById(R.id.product_category);
-            phone = itemView.findViewById(R.id.phone_number);
-            available = itemView.findViewById(R.id.text_available);
-            option = itemView.findViewById(R.id.mylist_option);
-            option.setVisibility(View.VISIBLE);
-            available.setText("requested");
-        }
-    }
-
     private void deleteProduct(String id, final int adapterPosition) {
         DocumentReference productIdRef = Generics.initFirestore(mContext).collection("requested_products").document(id);
 
@@ -116,5 +99,21 @@ public class UserRequestedAdapter extends RecyclerView.Adapter<UserRequestedAdap
                         Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView name, quantity, category, phone, available, option;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            name = itemView.findViewById(R.id.product_name);
+            quantity = itemView.findViewById(R.id.product_quantity);
+            category = itemView.findViewById(R.id.product_category);
+            phone = itemView.findViewById(R.id.phone_number);
+            available = itemView.findViewById(R.id.text_available);
+            option = itemView.findViewById(R.id.mylist_option);
+            option.setVisibility(View.VISIBLE);
+            available.setText("requested");
+        }
     }
 }

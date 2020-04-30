@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="300dp">
 
@@ -45,11 +44,11 @@
             android:id="@+id/avoid_radioButton1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="@string/radio_every_1_hour"
             android:textColor="@color/colorText"
             android:textSize="14dp"
-            android:textStyle="bold"
-            android:checked="true"/>
+            android:textStyle="bold" />
 
         <RadioButton
             android:id="@+id/avoid_radioButton2"

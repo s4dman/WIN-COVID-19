@@ -18,7 +18,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.imsadman.win_covid_19.R;
 import com.imsadman.win_covid_19.models.OfferedEntity;
-import com.imsadman.win_covid_19.models.RequestedEntity;
 import com.imsadman.win_covid_19.utils.Generics;
 
 import java.util.List;
@@ -83,24 +82,8 @@ public class UserOfferedAdapter extends RecyclerView.Adapter<UserOfferedAdapter.
         return mProductEntityList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        TextView name, quantity, category, phone, available, option;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            name = itemView.findViewById(R.id.product_name);
-            quantity = itemView.findViewById(R.id.product_quantity);
-            category = itemView.findViewById(R.id.product_category);
-            phone = itemView.findViewById(R.id.phone_number);
-            available = itemView.findViewById(R.id.text_available);
-            option = itemView.findViewById(R.id.mylist_option);
-            option.setVisibility(View.VISIBLE);
-        }
-    }
-
     private void deleteProduct(String id, final int adapterPosition) {
-        DocumentReference productIdRef = Generics.initFirestore(mContext).  collection("offered_products").document(id);
+        DocumentReference productIdRef = Generics.initFirestore(mContext).collection("offered_products").document(id);
 
         productIdRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -118,5 +101,21 @@ public class UserOfferedAdapter extends RecyclerView.Adapter<UserOfferedAdapter.
 
                     }
                 });
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        TextView name, quantity, category, phone, available, option;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            name = itemView.findViewById(R.id.product_name);
+            quantity = itemView.findViewById(R.id.product_quantity);
+            category = itemView.findViewById(R.id.product_category);
+            phone = itemView.findViewById(R.id.phone_number);
+            available = itemView.findViewById(R.id.text_available);
+            option = itemView.findViewById(R.id.mylist_option);
+            option.setVisibility(View.VISIBLE);
+        }
     }
 }

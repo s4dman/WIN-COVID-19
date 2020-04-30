@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.imsadman.win_covid_19.R;
 import com.imsadman.win_covid_19.models.OfferedEntity;
-import com.imsadman.win_covid_19.models.RequestedEntity;
 
 import java.util.List;
 

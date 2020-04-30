@@ -2,6 +2,7 @@ package com.imsadman.win_covid_19.ui.reminder;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,8 +20,6 @@ import com.imsadman.win_covid_19.R;
 import com.imsadman.win_covid_19.utils.Generics;
 
 import java.util.Calendar;
-
-import static android.content.Context.ALARM_SERVICE;
 
 public class HandWashDialog extends BottomSheetDialogFragment {
 
@@ -69,7 +68,7 @@ public class HandWashDialog extends BottomSheetDialogFragment {
 
     private void handWashReminder(int hour) {
 
-        alarmMgr = (AlarmManager) getContext().getSystemService(ALARM_SERVICE);
+        alarmMgr = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getContext(), HandWashReceiver.class);
         alarmIntent = PendingIntent.getBroadcast(getContext(), 1, intent, 0);
 
@@ -83,14 +82,23 @@ public class HandWashDialog extends BottomSheetDialogFragment {
         calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
         calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND));
 
-
         if (hour == 1) {
+
+            if (calendar.before(Calendar.getInstance())) {
+                calendar.add(Calendar.HOUR_OF_DAY, 1);
+            }
+
             alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_HOUR, alarmIntent);
-            Generics.setSharedPref(getContext(),"pref_handWash", "true");
+            Generics.setSharedPref(getContext(), "pref_handWash", "true");
             Toast.makeText(getContext(), "We will remind you every 1 hour", Toast.LENGTH_SHORT).show();
         } else {
+
+            if (calendar.before(Calendar.getInstance())) {
+                calendar.add(Calendar.HOUR_OF_DAY, 2);
+            }
+
             alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 7200000, alarmIntent);
-            Generics.setSharedPref(getContext(),"pref_handWash", "true");
+            Generics.setSharedPref(getContext(), "pref_handWash", "true");
             Toast.makeText(getContext(), "We will remind you every 2 hours", Toast.LENGTH_SHORT).show();
         }
     }
