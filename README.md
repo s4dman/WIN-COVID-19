@@ -1,5 +1,5 @@
 # WIN-COVID-19
-<img src="https://img.shields.io/badge/alpha-1.0.0-blue"/> <img src="https://img.shields.io/badge/-android-green"/> 
+<img src="https://img.shields.io/badge/alpha-1.0.0-blue"/> <img src="https://img.shields.io/badge/dependencies-up--to--date-brightgreen" /> <img src="https://img.shields.io/github/license/s4dman/WIN-COVID-19"/> <img src="https://img.shields.io/github/repo-size/s4dman/WIN-COVID-19"/> <img src="https://img.shields.io/github/last-commit/s4dman/WIN-COVID-19"/>
 
 WIN COVID-19 will help us to fight against the coronavirus by raising awareness, supporting the community, and by reducing the risk - all in one place.
 
