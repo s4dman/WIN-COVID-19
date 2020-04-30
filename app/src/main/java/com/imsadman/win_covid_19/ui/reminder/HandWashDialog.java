@@ -79,12 +79,8 @@ public class HandWashDialog extends BottomSheetDialogFragment {
         } else {
             calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR) + 2);
         }
-        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + 1);
+        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
         calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND));
-
-        if (calendar.before(Calendar.getInstance())) {
-            calendar.add(Calendar.HOUR_OF_DAY, 1);
-        }
 
         if (hour == 1) {
 
