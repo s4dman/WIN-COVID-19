@@ -42,9 +42,9 @@ Download and install the apk from [Release](https://github.com/s4dman/WIN-COVID-
 
 Or
 
-To get the full source code:
+To clone the full source code:
 
-`https://github.com/s4dman/WIN-COVID-19.git`
+`git clone https://github.com/s4dman/WIN-COVID-19.git`
 
 Limitations:
 
