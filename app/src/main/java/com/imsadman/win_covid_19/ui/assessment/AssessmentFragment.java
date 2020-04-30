@@ -87,8 +87,13 @@ public class AssessmentFragment extends Fragment {
                 mAssess.setVisibility(View.GONE);
                 mQ1Layout.setVisibility(View.GONE);
                 mPositivePage.setVisibility(View.VISIBLE);
-                mTestCenterName.setText(mTestCenterEntitiesList.get(0).getHospital_name());
-                mTestCenterSite.setText(mTestCenterEntitiesList.get(0).getWebsite());
+                if (mTestCenterEntitiesList.size() > 0) {
+                    mTestCenterName.setText(mTestCenterEntitiesList.get(0).getHospital_name());
+                    mTestCenterSite.setText(mTestCenterEntitiesList.get(0).getWebsite());
+                } else {
+                    mTestCenterName.setText("No test center found");
+                    mTestCenterSite.setText("");
+                }
 
             }
         });
