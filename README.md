@@ -56,5 +56,5 @@ Limitations:
 
 ## Team WinDroid:
 
-* [Sadman Hasan](http://imsadman.com)
+* [Sadman Hasan](http://sadmanhasan.com/)
 * Samir Shahriar
