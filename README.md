@@ -3,7 +3,7 @@
 
 WIN COVID-19 will help us to fight against the coronavirus by raising awareness, supporting the community, and by reducing the risk - all in one place.
 
-This project was built from scratch by Team WinDroid for DSC Solution Challenge 2020.
+This project was built from scratch by Team WinDroid, reieved Winner Honorable Mention at WinHacks 2020 and also submitted for DSC Solution Challenge 2020.
 
 ## Screenshots:
 
